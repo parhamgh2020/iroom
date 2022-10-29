@@ -7,9 +7,11 @@ from fastapi import HTTPException, status
 
 def create_user(db: Session, request: UserBase):
   new_user = DbUser(
-    username = request.username,
+    first_name = request.first_name,
+    last_name = request.last_name,
     email = request.email,
-    password = Hash.bcrypt(request.password)
+    phone_number = request.phone_number,
+    national_code = request.national_code,
   )
   db.add(new_user)
   db.commit()
@@ -39,9 +41,11 @@ def update_user(db: Session, id: int, request: UserBase):
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
       detail=f'User with id {id} not found')
   user.update({
-    DbUser.username: request.username,
-    DbUser.email: request.email,
-    DbUser.password: Hash.bcrypt(request.password)
+    DbUser.firstname: request.first_name,
+    DbUser.lastname: request.last_name,
+    DbUser.lastname: request.last_name,
+    DbUser.national_code: request.national_code,
+    DbUser.phone_number: request.phone_number,
   })
   db.commit()
   return 'ok'

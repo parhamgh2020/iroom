@@ -2,11 +2,11 @@ from typing import List
 from pydantic import BaseModel
 
 class UserBase(BaseModel):
-  username: str
+  first_name: str
+  last_name: str
   email: str
-  password: str
   national_code: int
-  phone: str
+  phone_number: str
 
 class User(BaseModel):
   id: int
@@ -16,8 +16,8 @@ class User(BaseModel):
 
 
 class UserDisplay(BaseModel):
-    username: str
-    email: str
-    password: str
-    national_code: int
-    phone: str
+  first_name: str
+  last_name: str
+  email: str
+  national_code: int
+  phone_number: str

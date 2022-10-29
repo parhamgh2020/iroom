@@ -8,7 +8,8 @@ from sqlalchemy import Column
 class DbUser(Base):
   __tablename__ = 'users'
   id = Column(Integer, primary_key=True, index=True)
-  username = Column(String)
+  firstname = Column(String)
+  lastname = Column(String)
   email = Column(String)
-  password = Column(String)
-  items = relationship('DbArticle', back_populates='user')
+  national_code = Column(Integer)
+  phone_number = Column(String)
