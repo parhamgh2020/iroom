@@ -6,10 +6,10 @@ from sqlalchemy import Column
 
 
 class DbUser(Base):
-  __tablename__ = 'users'
-  id = Column(Integer, primary_key=True, index=True)
-  firstname = Column(String)
-  lastname = Column(String)
-  email = Column(String)
-  national_code = Column(Integer)
-  phone_number = Column(String)
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True, index=True)
+    firstname = Column(String)
+    lastname = Column(String)
+    email = Column(String)
+    national_code = Column(Integer)
+    phone_number = Column(String)
