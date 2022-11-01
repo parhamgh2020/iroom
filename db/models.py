@@ -1,7 +1,7 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Integer, String, Boolean
-from db.database import Base
+from db.database import Base, engine
 from sqlalchemy import Column
 
 
@@ -13,3 +13,6 @@ class DbUser(Base):
     email = Column(String)
     national_code = Column(Integer)
     phone_number = Column(String)
+
+
+DbUser.metadata.create_all(bind=engine)
