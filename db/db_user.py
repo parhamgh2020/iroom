@@ -31,11 +31,11 @@ def get_user(db: Session, id: int):
     return user
 
 
-def get_user_by_username(db: Session, username: str):
-    user = db.query(DbUser).filter(DbUser.username == username).first()
+def get_user_by_firstname(db: Session, firstname: str):
+    user = db.query(DbUser).filter(DbUser.firstname == firstname).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'User with username {username} not found')
+                            detail=f'User with firstname {firstname} not found')
     return user
 
 

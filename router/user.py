@@ -1,11 +1,11 @@
-from typing import List
+from typing import List, Union
 from schemas import UserBase, UserDisplay
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Header
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from db.database import get_db
 from db import db_user
-from auth.oauth2 import get_current_user
+from auth.oauth2 import get_athenticated_user
 
 
 router = APIRouter(
@@ -30,14 +30,15 @@ def create_user(request: UserBase, db: Session = Depends(get_db)):
 # Read all users
 
 
-@router.get('/', response_model=List[UserDisplay])
-def get_all_users(db: Session = Depends(get_db), auth: UserBase = Depends(get_current_user)):
+@router.get('/')
+def get_all_users(token: Union[str, None] = Header(default=None), db: Session = Depends(get_db)):
+    user = get_athenticated_user(token, db)
     return db_user.get_all_users(db)
 
 # Read one user
 
 
-@router.get('/{id}', response_model=UserDisplay)
+@router.get('/{id}')
 def get_user(id: int, db: Session = Depends(get_db)):
     return db_user.get_user(db, id)
 
@@ -54,3 +55,5 @@ def update_user(id: int, request: UserBase, db: Session = Depends(get_db)):
 @router.delete('/delete/{id}')
 def delete(id: int, db: Session = Depends(get_db)):
     return db_user.delete_user(db, id)
+
+
