@@ -29,4 +29,5 @@ class UserDisplay(BaseModel):
 
 class Auth(BaseModel):
     phone_number : str
+    national_code: str
     sms_code : int

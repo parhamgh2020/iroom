@@ -17,8 +17,10 @@ def get_token(request: Auth, db: Session = Depends(get_db)):
   user = db.query(models.DbUser).filter(models.DbUser.phone_number == request.phone_number).first()
   if not user:
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid credentials")
+  if not request.national_code == user.national_code:
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="incorrect national code")
   if not 1111 == request.sms_code:
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Incorrect password")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Incorrect sms")
   
   access_token = oauth2.create_access_token(data={'sub': user.firstname})
 

@@ -11,8 +11,8 @@ class DbUser(Base):
     firstname = Column(String)
     lastname = Column(String)
     email = Column(String)
-    national_code = Column(Integer)
-    phone_number = Column(String)
+    national_code = Column(String, unique=True)
+    phone_number = Column(String , unique=True)
 
 
 DbUser.metadata.create_all(bind=engine)
