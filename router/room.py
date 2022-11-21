@@ -6,12 +6,10 @@ from db.database import get_db
 from db import db_user
 from auth.oauth2 import get_athenticated_user
 
-
 router = APIRouter(
     prefix='/room',
     tags=['room']
 )
-
 
 
 @router.get('/')
