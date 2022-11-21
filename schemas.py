@@ -1,3 +1,4 @@
+from dataclasses import Field
 from typing import List
 from pydantic import BaseModel
 
@@ -24,3 +25,9 @@ class UserDisplay(BaseModel):
     email: str
     national_code: str
     phone_number: str
+
+
+class Auth(BaseModel):
+    phone_number : str
+    national_code: str
+    sms_code : int
