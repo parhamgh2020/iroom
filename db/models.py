@@ -18,12 +18,14 @@ class DbUser(Base):
 class DbReception(Base):
     __tablename__ = 'reception'
     id = Column(Integer, primary_key=True, index=True)
-    room = Column(Integer, ForeignKey("user.id"))
-    start_inhabiting = Column(Date)
-    end_inhabiting = Column(Date)
-    status = Column(String)
+    user = Column(Integer, ForeignKey("user.id"))
+    room = Column(Integer, ForeignKey("room.id"))
+    start_rent = Column(Date)
+    end_rent = Column(Date)
+    payment_status = Column(String)
     price = Column(Float)
-    off = Column(Float)
+    percentage_off = Column(Float)
+    price_off = Column(Float)
 
 
 class DbRoom(Base):
