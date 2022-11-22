@@ -24,7 +24,7 @@ def get_all_users(db: Session):
 
 
 def get_user(db: Session, _id: int):
-    user = db.query(DbUser).filter(DbUser.id == id).first()
+    user = db.query(DbUser).filter(DbUser.id == _id).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'User with id {_id} not found')
@@ -39,11 +39,11 @@ def get_user_by_firstname(db: Session, firstname: str):
     return user
 
 
-def update_user(db: Session, id: int, request: UserBase):
-    user = db.query(DbUser).filter(DbUser.id == id)
+def update_user(db: Session, _id: int, request: UserBase):
+    user = db.query(DbUser).filter(DbUser.id == _id)
     if not user.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'User with id {id} not found')
+                            detail=f'User with id {_id} not found')
     user.update({
         DbUser.firstname: request.firstname,
         DbUser.lastname: request.lastname,
@@ -54,11 +54,11 @@ def update_user(db: Session, id: int, request: UserBase):
     return 'ok'
 
 
-def delete_user(db: Session, id: int):
-    user = db.query(DbUser).filter(DbUser.id == id).first()
+def delete_user(db: Session, _id: int):
+    user = db.query(DbUser).filter(DbUser.id == _id).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'User with id {id} not found')
+                            detail=f'User with id {_id} not found')
     db.delete(user)
     db.commit()
     return 'ok'

@@ -23,7 +23,7 @@ def get_all_rooms(db: Session):
 
 
 def get_room(db: Session, _id: int):
-    room = db.query(DbRoom).filter(DbRoom.id == id).first()
+    room = db.query(DbRoom).filter(DbRoom.id == _id).first()
     if not room:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'Room with id {_id} not found')
@@ -38,11 +38,11 @@ def get_user_by_room_number(db: Session, room_number: int):
     return room
 
 
-def update_room(db: Session, id: int, request: RoomBase):
-    room = db.query(DbRoom).filter(DbRoom.id == id)
+def update_room(db: Session, _id: int, request: RoomBase):
+    room = db.query(DbRoom).filter(DbRoom.id == _id)
     if not room.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'Room with id {id} not found')
+                            detail=f'Room with id {_id} not found')
     room.update({
         DbRoom.type: request.type,
         DbRoom.capacity: request.capacity,
