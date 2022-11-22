@@ -1,8 +1,8 @@
-from db.hash import Hash
 from sqlalchemy.orm.session import Session
 from schemas import UserBase
 from db.models import DbUser
 from fastapi import HTTPException, status
+from fastapi.responses import JSONResponse
 
 
 def create_user(db: Session, request: UserBase):
@@ -16,18 +16,18 @@ def create_user(db: Session, request: UserBase):
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    return new_user
+    return JSONResponse(status_code=201, content=new_user)
 
 
 def get_all_users(db: Session):
     return db.query(DbUser).all()
 
 
-def get_user(db: Session, id: int):
+def get_user(db: Session, _id: int):
     user = db.query(DbUser).filter(DbUser.id == id).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'User with id {id} not found')
+                            detail=f'User with id {_id} not found')
     return user
 
 

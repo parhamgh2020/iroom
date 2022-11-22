@@ -2,6 +2,7 @@ from sqlalchemy.orm.session import Session
 from schemas import RoomBase
 from db.models import DbRoom
 from fastapi import HTTPException, status
+from fastapi.responses import JSONResponse
 
 
 def create_room(db: Session, request: RoomBase):
@@ -14,18 +15,18 @@ def create_room(db: Session, request: RoomBase):
     db.add(new_room)
     db.commit()
     db.refresh(new_room)
-    return new_room
+    return JSONResponse(status_code=201, content=new_room)
 
 
 def get_all_rooms(db: Session):
     return db.query(DbRoom).all()
 
 
-def get_room(db: Session, id: int):
+def get_room(db: Session, _id: int):
     room = db.query(DbRoom).filter(DbRoom.id == id).first()
     if not room:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'Room with id {id} not found')
+                            detail=f'Room with id {_id} not found')
     return room
 
 
