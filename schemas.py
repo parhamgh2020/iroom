@@ -28,6 +28,13 @@ class UserDisplay(BaseModel):
 
 
 class Auth(BaseModel):
-    phone_number : str
+    phone_number: str
     national_code: str
-    sms_code : int
+    sms_code: int
+
+
+class RoomBase(BaseModel):
+    type: str
+    capaciy: int
+    floor: float
+    room_number : int
