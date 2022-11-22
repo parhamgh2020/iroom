@@ -7,7 +7,7 @@ from fastapi import HTTPException, status
 def create_room(db: Session, request: RoomBase):
     new_room = DbRoom(
         type=request.type,
-        capaciy=request.capaciy,
+        capacity=request.capacity,
         floor=request.floor,
         room_number=request.room_number
     )
@@ -44,7 +44,7 @@ def update_room(db: Session, id: int, request: RoomBase):
                             detail=f'Room with id {id} not found')
     room.update({
         DbRoom.type: request.type,
-        DbRoom.capaciy: request.capaciy,
+        DbRoom.capacity: request.capacity,
         DbRoom.floor: request.floor,
         DbRoom.room_number: request.room_number
     })

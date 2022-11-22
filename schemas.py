@@ -35,6 +35,6 @@ class Auth(BaseModel):
 
 class RoomBase(BaseModel):
     type: str
-    capaciy: int
+    capacity: int
     floor: float
-    room_number : int
+    room_number: int

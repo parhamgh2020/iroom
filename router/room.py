@@ -1,3 +1,4 @@
+import traceback
 from typing import List, Union
 from fastapi import APIRouter, Depends, Header
 from fastapi.responses import JSONResponse
@@ -7,12 +8,10 @@ from db import db_room
 from auth.oauth2 import get_authenticated_user
 from schemas import RoomBase
 
-
 router = APIRouter(
     prefix='/room',
     tags=['room']
 )
-
 
 
 @router.get('/test_auth')
@@ -24,6 +23,7 @@ def get_all_rooms(token: Union[str, None] = Header(default=None), db: Session = 
         'user': user
     }
 
+
 @router.post('/')
 def create_room(request: RoomBase, db: Session = Depends(get_db)):
     try:
@@ -32,14 +32,17 @@ def create_room(request: RoomBase, db: Session = Depends(get_db)):
     except Exception as exp:
         return JSONResponse(
             status_code=500,
-            content=str(exp)
+            content=traceback.format_exc()
         )
+
+
 # Read all users
 
 
 @router.get('/')
 def get_all_users(db: Session = Depends(get_db)):
     return db_room.get_all_rooms(db)
+
 
 # Read one user
 
@@ -48,12 +51,14 @@ def get_all_users(db: Session = Depends(get_db)):
 def get_user(id: int, db: Session = Depends(get_db)):
     return db_room.get_room(db, id)
 
+
 # Update user
 
 
 @router.put('/{id}/update')
 def update_room(id: int, request: RoomBase, db: Session = Depends(get_db)):
     return db_room.update_room(db, id, request)
+
 
 # Delete user
 

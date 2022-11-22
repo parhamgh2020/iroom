@@ -47,7 +47,6 @@ def update_user(db: Session, id: int, request: UserBase):
     user.update({
         DbUser.firstname: request.firstname,
         DbUser.lastname: request.lastname,
-        DbUser.lastname: request.lastname,
         DbUser.national_code: request.national_code,
         DbUser.phone_number: request.phone_number,
     })
