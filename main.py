@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from auth import authentication
-from router import user, room
+from router import user, room, reception, mobile_app
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import auth
@@ -17,6 +17,8 @@ app.add_middleware(
 app.include_router(authentication.router)
 app.include_router(user.router)
 app.include_router(room.router)
+app.include_router(reception.router)
+app.include_router(mobile_app.router)
 
 
 if __name__ == "__main__":

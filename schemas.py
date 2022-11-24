@@ -1,5 +1,6 @@
-from dataclasses import Field
-from typing import List
+from datetime import datetime, date, timedelta
+from typing import Literal
+
 from pydantic import BaseModel
 
 
@@ -30,7 +31,7 @@ class UserDisplay(BaseModel):
 class Auth(BaseModel):
     phone_number: str
     national_code: str
-    sms_code: int
+    sms_code: int = 1111
 
 
 class RoomBase(BaseModel):
@@ -38,3 +39,14 @@ class RoomBase(BaseModel):
     capacity: int
     floor: float
     room_number: int
+
+
+class ReceptionBase(BaseModel):
+    user_id: int = 1
+    room_id: int = 1
+    start_rent: date = datetime.now().date()
+    end_rent: date = (datetime.now() + timedelta(days=1)).date()
+    payment_status: Literal['paid', 'not_paid']
+    price: int = 1000
+    percentage_off: float = 0
+    price_off: float = 0

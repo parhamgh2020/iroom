@@ -1,8 +1,11 @@
+import json
+
 from sqlalchemy.orm.session import Session
 from schemas import RoomBase
 from db.models import DbRoom
 from fastapi import HTTPException, status
 from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 
 
 def create_room(db: Session, request: RoomBase):
@@ -15,7 +18,7 @@ def create_room(db: Session, request: RoomBase):
     db.add(new_room)
     db.commit()
     db.refresh(new_room)
-    return JSONResponse(status_code=201, content=new_room)
+    return JSONResponse(status_code=201, content=jsonable_encoder(new_room))
 
 
 def get_all_rooms(db: Session):

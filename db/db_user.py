@@ -3,6 +3,7 @@ from schemas import UserBase
 from db.models import DbUser
 from fastapi import HTTPException, status
 from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 
 
 def create_user(db: Session, request: UserBase):
@@ -16,7 +17,7 @@ def create_user(db: Session, request: UserBase):
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    return JSONResponse(status_code=201, content=new_user)
+    return JSONResponse(status_code=201, content=jsonable_encoder(new_user))
 
 
 def get_all_users(db: Session):
@@ -62,3 +63,6 @@ def delete_user(db: Session, _id: int):
     db.delete(user)
     db.commit()
     return 'ok'
+
+
+

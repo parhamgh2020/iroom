@@ -18,8 +18,8 @@ class DbUser(Base):
 class DbReception(Base):
     __tablename__ = 'reception'
     id = Column(Integer, primary_key=True, index=True)
-    user = Column(Integer, ForeignKey("user.id"))
-    room = Column(Integer, ForeignKey("room.id"))
+    user_id = Column(Integer, ForeignKey("user.id"))
+    room_id = Column(Integer, ForeignKey("room.id"))
     start_rent = Column(Date)
     end_rent = Column(Date)
     payment_status = Column(String)
