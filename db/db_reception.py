@@ -7,7 +7,7 @@ from db.models import DbReception, DbRoom, DbUser
 from schemas import ReceptionBase
 
 
-async def create_reception(db: Session, request: ReceptionBase):
+def create_reception(db: Session, request: ReceptionBase):
     new_reception = DbReception(
         user_id=request.user_id,
         room_id=request.room_id,
@@ -24,11 +24,11 @@ async def create_reception(db: Session, request: ReceptionBase):
     return JSONResponse(status_code=201, content=jsonable_encoder(new_reception))
 
 
-async def get_all_receptions(db: Session):
+def get_all_receptions(db: Session):
     return db.query(DbReception).all()
 
 
-async def get_reception(db: Session, _id: int):
+def get_reception(db: Session, _id: int):
     reception = db.query(DbReception).filter(DbReception.id == _id).first()
     if not reception:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -36,7 +36,7 @@ async def get_reception(db: Session, _id: int):
     return reception
 
 
-async def update_reception(db: Session, _id: int, request: ReceptionBase):
+def update_reception(db: Session, _id: int, request: ReceptionBase):
     reception = db.query(DbReception).filter(DbReception.id == _id)
     if not reception.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -55,7 +55,7 @@ async def update_reception(db: Session, _id: int, request: ReceptionBase):
     return 'ok'
 
 
-async def delete_reception(db: Session, _id: int):
+def delete_reception(db: Session, _id: int):
     reception = db.query(DbReception).filter(DbReception.id == _id).first()
     if not reception:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -65,7 +65,7 @@ async def delete_reception(db: Session, _id: int):
     return 'ok'
 
 
-async def get_reception_by_user_id(db: Session, _id: int):
+def get_reception_by_user_id(db: Session, _id: int):
     reception = db.query(DbReception, DbUser, DbRoom).filter(DbReception.user_id == _id).all()
     if not reception:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
